@@ -27,9 +27,9 @@
 
 ## 🧠 About
 
-xdsa is a C project that [brief description of what your program does].
+xdsa is a C project that contains a collection of data structures and algorithms
 
-It's written in standard C (C99) and uses GNU Make for building. The goal of this project is to [insert goal or motivation, e.g., build a simple CLI tool, implement data structures from scratch, etc.].
+It's written in standard C (C99) and uses GNU Make for building. The goal of this project is to implement data structures from scratch.
 
 ## 📁 Directory Structure
 
@@ -96,13 +96,12 @@ This project uses:
 
 - C99 Standard
 - GNU Make
-- (Optional) Any libraries you're using (e.g., `glib`, `SDL2`, etc.)
 
 ## 📚 Documentation
 
 - All headers are documented in the `include/` folder.
 - Inline comments are included in the source files.
-- [Optional] Use `doxygen` if you plan to generate documentation.
+- [maybe] Use `doxygen`
 
 ## 🙌 Contributing
 
