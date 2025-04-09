@@ -53,11 +53,9 @@ bool xdsa_vector_empty(struct xdsa_vector *vector) { return vector->size == 0; }
 
 void xdsa_vector_print(struct xdsa_vector *vector) {
   size_t i;
-  putchar('[');
-  for (i = 0; i < vector->size - 1; i++) {
-    printf("%d, ", vector->array[i]);
+  for (i = 0; i < vector->size; i++) {
+    printf("%d\n", vector->array[i]);
   }
-  printf("%d]\n", vector->array[i]);
 }
 
 void xdsa_vector_push_back(struct xdsa_vector *vector, int data) {
@@ -105,32 +103,126 @@ void xdsa_vector_reserve(struct xdsa_vector *vector, size_t capacity) {
   }
 }
 
-static void test_vector(void) {
-  size_t n = 20;
-  struct xdsa_vector *v = xdsa_vector_create(n);
-  size_t i;
-  for (i = 0; i < n; i++) {
-    v->array[i] = (int)i + 1;
-  }
-  int a;
-  xdsa_vector_print(v);
-  a = xdsa_vector_pop_back(v);
-  printf("%d\n", a);
-  a = xdsa_vector_pop_back(v);
-  printf("%d\n", a);
-  a = xdsa_vector_pop_back(v);
-  printf("%d\n", a);
-  xdsa_vector_push_back(v, a);
-  xdsa_vector_push_back(v, a);
-  xdsa_vector_print(v);
-  putchar('\n');
-
-  xdsa_vector_destroy(v);
-}
-
 /******************************************************************************/
 /*                                               SINGLY LINKED LIST - ONE WAY */
 /******************************************************************************/
+
+struct xdsa_list_node *xdsa_list_node_create(int data) {
+  struct xdsa_list_node *node = malloc(sizeof(*node));
+
+  if (node == NULL) {
+    fprintf(stderr, "[ERROR] Failed to allocate memory\n");
+    exit(EXIT_FAILURE);
+  }
+  node->data = data;
+  node->previous = NULL;
+  node->next = NULL;
+  return node;
+}
+
+void xdsa_list_node_destroy(struct xdsa_list_node *node) {
+  node->data = 0;
+  node->previous = NULL;
+  node->next = NULL;
+  free(node);
+  node = NULL;
+}
+
+struct xdsa_sll *xdsa_sll_create(void) {
+  struct xdsa_sll *sll = malloc(sizeof(*sll));
+  if (sll == NULL) {
+    fprintf(stderr, "[ERROR] Failed to allocate memory\n");
+    exit(EXIT_FAILURE);
+  }
+  sll->size = 0;
+  sll->head = NULL;
+  sll->tail = NULL;
+  return sll;
+}
+
+void xdsa_sll_destroy(struct xdsa_sll *sll) {
+  while (sll->head != NULL) {
+    struct xdsa_list_node *temp = sll->head->next;
+    xdsa_list_node_destroy(sll->head);
+    sll->head = temp;
+  }
+  sll->size = 0;
+  free(sll);
+  sll = NULL;
+}
+
+int xdsa_sll_size(struct xdsa_sll *sll) { return sll->size; }
+
+void xdsa_sll_clear(struct xdsa_sll *sll) {
+  while (sll->head != NULL) {
+    sll->head->data = 0;
+    sll->head = sll->head->next;
+  }
+  sll->size = 0;
+}
+
+bool xdsa_sll_empty(struct xdsa_sll *sll) { return sll->size == 0; }
+
+void xdsa_sll_print(struct xdsa_list_node *head) {
+  while (head != NULL) {
+    printf("%d\n", head->data);
+    head = head->next;
+  }
+}
+
+void xdsa_sll_push_front(struct xdsa_sll *sll, int data) {
+  struct xdsa_list_node *new_head = xdsa_list_node_create(data);
+  new_head->next = sll->head;
+  sll->head = new_head;
+  sll->size++;
+}
+
+int xdsa_sll_pop_front(struct xdsa_sll *sll) {
+  int data = sll->head->data;
+  sll->size--;
+  struct xdsa_list_node *temp = sll->head->next;
+  xdsa_list_node_destroy(sll->head);
+  sll->head = temp;
+  return data;
+}
+
+void xdsa_sll_push_back(struct xdsa_sll *sll, int data) {
+  sll->tail->next = xdsa_list_node_create(data);
+  sll->tail = sll->tail->next;
+  sll->size++;
+}
+
+// TODO: dont use previous since this is a sll
+extern int xdsa_sll_pop_back(struct xdsa_sll *sll);
+
+// TODO: test
+int xdsa_sll_front(struct xdsa_sll *sll) { return sll->head->data; }
+
+// TODO: test
+int xdsa_sll_back(struct xdsa_sll *sll) { return sll->tail->data; }
+
+void test(void) {
+  struct xdsa_sll *sll = xdsa_sll_create();
+  sll->head = sll->tail = xdsa_list_node_create(200);
+  sll->tail->next = xdsa_list_node_create(2323);
+  sll->tail = sll->tail->next;
+  printf("%lu\n", sll->size);
+  printf("%u\n", xdsa_sll_empty(sll));
+  xdsa_sll_print(sll->head);
+  xdsa_sll_push_front(sll, 4234234);
+  xdsa_sll_push_front(sll, 434);
+  xdsa_sll_print(sll->head);
+  xdsa_sll_pop_front(sll);
+  xdsa_sll_pop_front(sll);
+  xdsa_sll_pop_front(sll);
+  xdsa_sll_print(sll->head);
+  xdsa_sll_push_back(sll, 434);
+  xdsa_sll_push_back(sll, 434);
+  xdsa_sll_push_back(sll, 434);
+  xdsa_sll_print(sll->head);
+  printf("%lu\n", sll->size);
+  xdsa_sll_destroy(sll);
+}
 
 /******************************************************************************/
 /*                                               DOUBLY LINKED LIST - TWO WAY */
@@ -226,31 +318,11 @@ int xdsa_binary_search(const int *array, int length, int target) {
 /*                                                       MATH & NUMBER THEORY */
 /******************************************************************************/
 
-// Copy and pasted from: https://en.wikipedia.org/wiki/Fast_inverse_square_root
-// TODO: create my own version
-float Q_rsqrt(float number) {
-  long i;
-  float x2, y;
-  const float threehalfs = 1.5F;
-
-  x2 = number * 0.5F;
-  y = number;
-  i = *(long *)&y;           // evil floating point bit level hacking
-  i = 0x5f3759df - (i >> 1); // what the fuck?
-  y = *(float *)&i;
-  y = y * (threehalfs - (x2 * y * y)); // 1st iteration
-  //	y  = y * ( threehalfs - ( x2 * y * y ) );   // 2nd iteration, this can
-  // be removed
-
-  return y;
-}
-
 int main(int argc, char **argv) {
   (void)argc;
   (void)argv;
 
-  test_vector();
-
+  test();
   imd_debug_memory_init(NULL, NULL, NULL);
   imd_debug_memory_print(0);
   imd_debug_memory_reset();

@@ -61,13 +61,9 @@ extern "C" {
 // (returns the first item)
 // NOTE: doubly linked list: push_front ( add item to
 // the front), pop_front (remvoe from the front)
-// NOTE: dynamic array: array[i]
-// (no bounds checking), at(i) (with bounds checking), capacity (return internal
-// capacity), void reserve (set new capacity)
 // TODO: SINGLY LINKED LIST
 // TODO: DOUBLY LINKED LIST
 // TODO: HASH TABLE
-// TODO: DYNAMIC ARRAY
 // TODO: STACK
 // TODO: HEAP
 //
@@ -81,17 +77,6 @@ extern "C" {
 /******************************************************************************/
 /*                                            DYNAMIC ARRAY - RESIZABLE ARRAY */
 /******************************************************************************/
-
-// NOTE: constant time,
-// push_back(add to the end),
-// pop_back(remove from the end),
-// back (returns the last item),
-// front (returns the first item)
-
-// NOTE: array[i] (no bounds checking),
-// at(i) (with bounds checking),
-// capacity (return internal capacity),
-// void reserve (set new capacity)
 
 struct xdsa_vector {
   int *array;
@@ -117,11 +102,14 @@ extern void xdsa_vector_reserve(struct xdsa_vector *vector, size_t capacity);
 /*                                               SINGLY LINKED LIST - ONE WAY */
 /******************************************************************************/
 
-struct xdsa_node {
+struct xdsa_list_node {
   int data;
-  struct xdsa_node *previous;
-  struct xdsa_node *next;
+  struct xdsa_list_node *previous;
+  struct xdsa_list_node *next;
 };
+
+extern struct xdsa_list_node *xdsa_list_node_create(int data);
+extern void xdsa_list_node_destroy(struct xdsa_list_node *node);
 
 // NOTE: All data structures should have the following methods: int size(), void
 // clear(), bool empty(), void print()
@@ -135,22 +123,22 @@ struct xdsa_node {
 
 struct xdsa_sll {
   size_t size;
-  struct xdsa_node *head;
-  struct xdsa_node *tail;
+  struct xdsa_list_node *head;
+  struct xdsa_list_node *tail;
 };
 
-extern struct xdsa_vector *xdsa_sll_create(size_t size);
-extern struct xdsa_vector *xdsa_sll_destroy(struct xdsa_sll *sll);
-extern int xdsa_sll_size(struct xdsa_vector *sll);
-extern void xdsa_sll_clear(struct xdsa_vector *sll);
-extern bool xdsa_sll_empty(struct xdsa_vector *sll);
-extern void xdsa_sll_print(struct xdsa_vector *sll);
-extern void xdsa_sll_push_front(struct xdsa_vector *sll, int data);
-extern int xdsa_sll_pop_front(struct xdsa_vector *sll);
-extern void xdsa_sll_push_back(struct xdsa_vector *sll, int data);
-extern int xdsa_sll_pop_back(struct xdsa_vector *sll);
-extern int xdsa_sll_front(struct xdsa_vector *sll);
-extern int xdsa_sll_back(struct xdsa_vector *sll);
+extern struct xdsa_sll *xdsa_sll_create(void);
+extern void xdsa_sll_destroy(struct xdsa_sll *sll);
+extern int xdsa_sll_size(struct xdsa_sll *sll);
+extern void xdsa_sll_clear(struct xdsa_sll *sll);
+extern bool xdsa_sll_empty(struct xdsa_sll *sll);
+extern void xdsa_sll_print(struct xdsa_list_node *head);
+extern void xdsa_sll_push_front(struct xdsa_sll *sll, int data);
+extern int xdsa_sll_pop_front(struct xdsa_sll *sll);
+extern void xdsa_sll_push_back(struct xdsa_sll *sll, int data);
+extern int xdsa_sll_pop_back(struct xdsa_sll *sll);
+extern int xdsa_sll_front(struct xdsa_sll *sll);
+extern int xdsa_sll_back(struct xdsa_sll *sll);
 
 /******************************************************************************/
 /*                                               DOUBLY LINKED LIST - TWO WAY */
@@ -168,12 +156,12 @@ extern int xdsa_sll_back(struct xdsa_vector *sll);
 
 struct xdsa_dll {
   size_t size;
-  struct xdsa_node *head;
-  struct xdsa_node *tail;
+  struct xdsa_list_node *head;
+  struct xdsa_list_node *tail;
 };
 
 extern struct xdsa_vector *xdsa_dll_create(size_t size);
-extern struct xdsa_vector *xdsa_dll_destroy(struct xdsa_dll *dll);
+extern void xdsa_dll_destroy(struct xdsa_dll *dll);
 extern int xdsa_dll_size(struct xdsa_vector *dll);
 extern void xdsa_dll_clear(struct xdsa_vector *dll);
 extern bool xdsa_dll_empty(struct xdsa_vector *dll);
@@ -258,9 +246,6 @@ extern int xdsa_binary_search(const int *array, int length, int target);
 /******************************************************************************/
 /*                                                       MATH & NUMBER THEORY */
 /******************************************************************************/
-
-//  fast inverse square root implementation from Quake III Arena
-extern float Q_rsqrt(float number);
 
 #ifdef __cplusplus
 }

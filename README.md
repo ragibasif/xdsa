@@ -29,20 +29,28 @@
 
 ## 🧠 About
 
-xdsa is a C project that contains a collection of data structures and algorithms
+xdsa is a C project that contains a collection of data structures and algorithms.
 
 It's written in standard C (C99) and uses GNU Make for building. The goal of this project is to implement data structures from scratch.
+
+- [x] Dynamic Array
+- [ ] Singly Linked List
+- [ ] Doubly Linked List
+- [ ] Stack
+- [ ] Queue
+- [ ] Heap
+- [ ] Binary Search
+- [ ] Binary Search Tree
+- [ ] AVL Tree
 
 ## 📁 Directory Structure
 
 ```bash
 xdsa/
-├── src/            # Source files
-├── include/        # Header files
-├── build/          # Build artifacts (created after make)
+├── xdsa.c          # Source file
+├── xdsa.h          # Header file
 ├── Makefile        # Build system
-├── README.md       # This file
-└── main.c          # Entry point (if not inside src/)
+└── README.md       # This file
 ```
 
 ## 🛠️ Usage
@@ -72,24 +80,7 @@ make clean
 ### 🏃 Run the executable
 
 ```bash
-./build/xdsa
-```
-
-> The executable will be built inside the `build/` directory.
-
-## 🧪 Running Tests
-
-If you have a test suite:
-
-```bash
-make test
-```
-
-Or you can manually compile and run test files like:
-
-```bash
-gcc -Iinclude tests/test_foo.c src/foo.c -o test_foo
-./test_foo
+./xdsa
 ```
 
 ## 📄 Dependencies
@@ -101,9 +92,7 @@ This project uses:
 
 ## 📚 Documentation
 
-- All headers are documented in the `include/` folder.
-- Inline comments are included in the source files.
-- [maybe] Use `doxygen`
+- TODO
 
 ## 🙌 Contributing
 
@@ -117,12 +106,7 @@ This project uses:
 
 This project is licensed under the **MIT license**. See the [LICENSE](LICENSE) file for details.
 
-## 👤 Author
-
-[Ragib Asif](https://github.com/ragibasif)
-
 ## References
 
 - Kernighan, B. W., & Ritchie, D. M. (1988). The C programming language (2nd ed.). Prentice Hall.
-- Wikipedia contributors. (n.d.). Fast inverse square root. Wikipedia. Retrieved April 8, 2025, from https://en.wikipedia.org/wiki/Fast_inverse_square_root
 - Weiss, M. A. (2014). Data structures and algorithm analysis in C++ (4th ed.). Pearson.
