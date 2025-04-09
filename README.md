@@ -2,12 +2,14 @@
 
 # xdsa
 
+**WIP**
+
 </div>
 
 <details open="open">
 <summary>Table of Contents</summary>
 
-- [xdsa](#default)
+- [xdsa](#xdsa)
   - [🧠 About](#-about)
   - [📁 Directory Structure](#-directory-structure)
   - [🛠️ Usage](#️-usage)
@@ -119,4 +121,8 @@ This project is licensed under the **MIT license**. See the [LICENSE](LICENSE) f
 
 [Ragib Asif](https://github.com/ragibasif)
 
-## Acknowledgements
+## References
+
+- Kernighan, B. W., & Ritchie, D. M. (1988). The C programming language (2nd ed.). Prentice Hall.
+- Wikipedia contributors. (n.d.). Fast inverse square root. Wikipedia. Retrieved April 8, 2025, from https://en.wikipedia.org/wiki/Fast_inverse_square_root
+- Weiss, M. A. (2014). Data structures and algorithm analysis in C++ (4th ed.). Pearson.
