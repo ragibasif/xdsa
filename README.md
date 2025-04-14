@@ -55,6 +55,3 @@ make clean
 ```
 
 ## 📑 Acknowledgements
-
-- [Introduction to Algorithms - CLRS](https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/)
-- [Heaps - Stanford CS 161 Lecture 4 - Jessica Su](https://web.stanford.edu/class/archive/cs/cs161/cs161.1168/lecture4.pdf)
