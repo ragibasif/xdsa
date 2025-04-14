@@ -1,6 +1,6 @@
 # xdsa
 
-xdsa is a contains a collection of common and not so common data structures and algorithms implemented in C.
+XDSA contains a collection of data structures and algorithms implemented in C.
 
 It's written in standard C (C99) and uses GNU Make for building. The goal of this project is to implement data structures and algorithms from scratch for ***educational purposes only***.
 
@@ -54,4 +54,7 @@ make
 make clean
 ```
 
+## 📑 Acknowledgements
 
+- [Introduction to Algorithms - CLRS](https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/)
+- [Heaps - Stanford CS 161 Lecture 4 - Jessica Su](https://web.stanford.edu/class/archive/cs/cs161/cs161.1168/lecture4.pdf)
