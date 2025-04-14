@@ -160,7 +160,7 @@ struct xdsa_dll {
   struct xdsa_list_node *tail;
 };
 
-extern struct xdsa_vector *xdsa_dll_create(size_t size);
+extern struct xdsa_dll *xdsa_dll_create(size_t size);
 extern void xdsa_dll_destroy(struct xdsa_dll *dll);
 extern int xdsa_dll_size(struct xdsa_vector *dll);
 extern void xdsa_dll_clear(struct xdsa_vector *dll);

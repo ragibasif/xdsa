@@ -11,7 +11,6 @@ Date: 2025-04-08
 #include "xdsa.h"
 #include <stdio.h>
 #define IMD_MEMORY_DEBUG /* turns on the memory debugging system */
-// #define IMD_MEMORY_PRINT /* turns on the memory debugging system */
 #include "imd.h"
 
 /******************************************************************************/
@@ -201,7 +200,7 @@ int xdsa_sll_front(struct xdsa_sll *sll) { return sll->head->data; }
 // TODO: test
 int xdsa_sll_back(struct xdsa_sll *sll) { return sll->tail->data; }
 
-void test(void) {
+void test_sll(void) {
   struct xdsa_sll *sll = xdsa_sll_create();
   sll->head = sll->tail = xdsa_list_node_create(200);
   sll->tail->next = xdsa_list_node_create(2323);
@@ -322,7 +321,7 @@ int main(int argc, char **argv) {
   (void)argc;
   (void)argv;
 
-  test();
+  test_sll();
   imd_debug_memory_init(NULL, NULL, NULL);
   imd_debug_memory_print(0);
   imd_debug_memory_reset();

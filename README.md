@@ -1,37 +1,8 @@
-<div align="center">
-
 # xdsa
 
-**WIP**
+xdsa is a contains a collection of common and not so common data structures and algorithms implemented in C.
 
-</div>
-
-<details open="open">
-<summary>Table of Contents</summary>
-
-- [xdsa](#xdsa)
-  - [🧠 About](#-about)
-  - [📁 Directory Structure](#-directory-structure)
-  - [🛠️ Usage](#️-usage)
-    - [💻 Installation](#-installation)
-    - [🔧 Build the project](#-build-the-project)
-    - [🧹 Clean build files](#-clean-build-files)
-    - [🏃 Run the executable](#-run-the-executable)
-  - [🧪 Running Tests](#-running-tests)
-  - [📄 Dependencies](#-dependencies)
-  - [📚 Documentation](#-documentation)
-  - [🙌 Contributing](#-contributing)
-  - [🪪 License](#-license)
-  - [👤 Author](#-author)
-  - [Acknowledgements](#acknowledgements)
-
-</details>
-
-## 🧠 About
-
-xdsa is a C project that contains a collection of data structures and algorithms.
-
-It's written in standard C (C99) and uses GNU Make for building. The goal of this project is to implement data structures from scratch.
+It's written in standard C (C99) and uses GNU Make for building. The goal of this project is to implement data structures and algorithms from scratch for ***educational purposes only***.
 
 - [x] Dynamic Array
 - [ ] Singly Linked List
@@ -71,42 +42,16 @@ Make sure you have `gcc` and `make` installed.
 make
 ```
 
-### 🧹 Clean build files
-
-```bash
-make clean
-```
-
 ### 🏃 Run the executable
 
 ```bash
 ./xdsa
 ```
 
-## 📄 Dependencies
+### 🧹 Clean build files
 
-This project uses:
+```bash
+make clean
+```
 
-- C99 Standard
-- GNU Make
 
-## 📚 Documentation
-
-- TODO
-
-## 🙌 Contributing
-
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature/feature-name`)
-3. Make your changes and commit (`git commit -am 'Add new feature'`)
-4. Push to your fork (`git push origin feature/feature-name`)
-5. Open a pull request
-
-## 🪪 License
-
-This project is licensed under the **MIT license**. See the [LICENSE](LICENSE) file for details.
-
-## References
-
-- Kernighan, B. W., & Ritchie, D. M. (1988). The C programming language (2nd ed.). Prentice Hall.
-- Weiss, M. A. (2014). Data structures and algorithm analysis in C++ (4th ed.). Pearson.
