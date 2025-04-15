@@ -5,7 +5,7 @@ XDSA contains a collection of data structures and algorithms implemented in C.
 It's written in standard C (C99) and uses GNU Make for building. The goal of this project is to implement data structures and algorithms from scratch for ***educational purposes only***.
 
 - [x] Dynamic Array
-- [ ] Singly Linked List
+- [x] Singly Linked List
 - [ ] Doubly Linked List
 - [ ] Stack
 - [ ] Queue
