@@ -53,5 +53,3 @@ make
 ```bash
 make clean
 ```
-
-## 📑 Acknowledgements
