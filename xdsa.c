@@ -1,25 +1,18 @@
-/*
-Module Name: xdsa.c
-
-Description:
-This is the implementataion C file for xdsa.
-
-Author: Ragib Asif
-Date: 2025-04-08
-*/
-
+// xdsa.c
 #include "xdsa.h"
 #include <assert.h>
 #include <stdio.h>
 #define IMD_MEMORY_DEBUG /* turns on the memory debugging system */
 #include "imd.h"
 
+// FIXME: Add errors to illegal method calls for vector and sll
+
 /******************************************************************************/
 /*                                                               STACK - LIFO */
 /******************************************************************************/
 
 /******************************************************************************/
-/*                                            DYNAMIC ARRAY - RESIZABLE ARRAY */
+/*                                   VECTOR - DYNAMIC ARRAY - RESIZABLE ARRAY */
 /******************************************************************************/
 
 struct xdsa_vector *xdsa_vector_create(size_t size) {
@@ -136,6 +129,7 @@ void xdsa_vector_reserve(struct xdsa_vector *vector, size_t capacity) {
     vector->capacity = capacity;
 }
 
+// TODO: move to separate test file and directory
 static void xdsa_test_vector(void) {
 
     // Test creation and basic properties
@@ -323,10 +317,13 @@ int xdsa_sll_size(struct xdsa_sll *sll) { return sll->size; }
 
 void xdsa_sll_clear(struct xdsa_sll *sll) {
     while (sll->head != NULL) {
+        struct xdsa_list_node *temp = sll->head->next;
         sll->head->data = 0;
-        sll->head = sll->head->next;
+        xdsa_list_node_destroy(sll->head);
+        sll->head = temp;
     }
     sll->size = 0;
+    sll->head = sll->tail = NULL;
 }
 
 bool xdsa_sll_empty(struct xdsa_sll *sll) { return sll->size == 0; }
@@ -342,10 +339,15 @@ void xdsa_sll_push_front(struct xdsa_sll *sll, int data) {
     struct xdsa_list_node *new_head = xdsa_list_node_create(data);
     new_head->next = sll->head;
     sll->head = new_head;
+    if (!sll->tail) {
+        sll->tail = sll->head;
+    }
     sll->size++;
 }
 
 int xdsa_sll_pop_front(struct xdsa_sll *sll) {
+    if (!sll->size)
+        return -1;
     int data = sll->head->data;
     sll->size--;
     struct xdsa_list_node *temp = sll->head->next;
@@ -360,36 +362,106 @@ void xdsa_sll_push_back(struct xdsa_sll *sll, int data) {
     sll->size++;
 }
 
-// TODO: dont use previous since this is a sll
-extern int xdsa_sll_pop_back(struct xdsa_sll *sll);
+int xdsa_sll_front(struct xdsa_sll *sll) {
+    if (!sll->size)
+        return -1;
+    return sll->head->data;
+}
 
-// TODO: test
-int xdsa_sll_front(struct xdsa_sll *sll) { return sll->head->data; }
-
-// TODO: test
-int xdsa_sll_back(struct xdsa_sll *sll) { return sll->tail->data; }
+int xdsa_sll_back(struct xdsa_sll *sll) {
+    if (!sll->size)
+        return -1;
+    return sll->tail->data;
+}
 
 void xdsa_test_sll(void) {
-    struct xdsa_sll *sll = xdsa_sll_create();
-    sll->head = sll->tail = xdsa_list_node_create(200);
-    sll->tail->next = xdsa_list_node_create(2323);
-    sll->tail = sll->tail->next;
-    printf("%lu\n", sll->size);
-    printf("%u\n", xdsa_sll_empty(sll));
-    xdsa_sll_print(sll->head);
-    xdsa_sll_push_front(sll, 4234234);
-    xdsa_sll_push_front(sll, 434);
-    xdsa_sll_print(sll->head);
-    xdsa_sll_pop_front(sll);
-    xdsa_sll_pop_front(sll);
-    xdsa_sll_pop_front(sll);
-    xdsa_sll_print(sll->head);
-    xdsa_sll_push_back(sll, 434);
-    xdsa_sll_push_back(sll, 434);
-    xdsa_sll_push_back(sll, 434);
-    xdsa_sll_print(sll->head);
-    printf("%lu\n", sll->size);
-    xdsa_sll_destroy(sll);
+    printf("=== Starting Singly Linked List Tests ===\n");
+
+    // Test 1: Node creation and basic properties
+    printf("Test 1: Node operations...\n");
+    struct xdsa_list_node *node = xdsa_list_node_create(42);
+    assert(node != NULL);
+    assert(node->data == 42);
+    assert(node->next == NULL);
+    assert(node->previous == NULL); // Note: This suggests it's not purely SLL
+    xdsa_list_node_destroy(node);
+
+    // Test 2: List creation and basic properties
+    printf("Test 2: List creation...\n");
+    struct xdsa_sll *list = xdsa_sll_create();
+    assert(list != NULL);
+    assert(xdsa_sll_size(list) == 0);
+    assert(list->head == NULL);
+    assert(list->tail == NULL);
+    assert(xdsa_sll_empty(list));
+
+    // Test 3: Push front and basic operations
+    printf("Test 3: Push front operations...\n");
+    xdsa_sll_push_front(list, 10);
+    assert(xdsa_sll_size(list) == 1);
+    assert(xdsa_sll_front(list) == 10);
+    assert(xdsa_sll_back(list) == 10);
+    xdsa_sll_push_front(list, 20);
+    assert(xdsa_sll_size(list) == 2);
+    assert(xdsa_sll_front(list) == 20);
+    assert(xdsa_sll_back(list) == 10);
+
+    // Test 4: Pop front operations
+    printf("Test 4: Pop front operations...\n");
+    assert(xdsa_sll_pop_front(list) == 20);
+    assert(xdsa_sll_size(list) == 1);
+    assert(xdsa_sll_front(list) == 10);
+
+    // Test 5: Push back operations
+    printf("Test 5: Push back operations...\n");
+    xdsa_sll_push_back(list, 30);
+    assert(xdsa_sll_size(list) == 2);
+    assert(xdsa_sll_front(list) == 10);
+    assert(xdsa_sll_back(list) == 30);
+
+    xdsa_sll_push_back(list, 40);
+    assert(xdsa_sll_size(list) == 3);
+    assert(xdsa_sll_back(list) == 40);
+
+    // Test 6: Clear operation
+    printf("Test 6: Clear operation...\n");
+    xdsa_sll_clear(list);
+    assert(xdsa_sll_size(list) == 0);
+    assert(xdsa_sll_empty(list));
+    assert(list->head == NULL);
+    assert(list->tail == NULL);
+
+    // Test 7: Mixed operations
+    printf("Test 7: Mixed operations...\n");
+    xdsa_sll_push_front(list, 2);
+    xdsa_sll_push_back(list, 3);
+    xdsa_sll_push_front(list, 1);
+    xdsa_sll_push_back(list, 4);
+    assert(xdsa_sll_size(list) == 4);
+    assert(xdsa_sll_front(list) == 1);
+    assert(xdsa_sll_back(list) == 4);
+
+    assert(xdsa_sll_pop_front(list) == 1);
+    assert(xdsa_sll_pop_front(list) == 2);
+    assert(xdsa_sll_pop_front(list) == 3);
+    assert(xdsa_sll_pop_front(list) == 4);
+    assert(xdsa_sll_empty(list));
+
+    // Test 8: Edge cases
+    printf("Test 8: Edge cases...\n");
+    // Note: Original implementation would crash on these - would need error
+    assert(xdsa_sll_pop_front(list) == -1); // Would need error
+    assert(xdsa_sll_front(list) == -1);     // Would need error
+    assert(xdsa_sll_back(list) == -1);      // Would need error
+
+    // Test single element case
+    xdsa_sll_push_front(list, 99);
+    assert(xdsa_sll_pop_front(list) == 99);
+    assert(xdsa_sll_empty(list));
+    // Clean up
+    xdsa_sll_destroy(list);
+
+    printf("=== All tests passed successfully ===\n");
 }
 
 /******************************************************************************/
@@ -491,7 +563,7 @@ int main(int argc, char **argv) {
     (void)argv;
 
     // xdsa_test_vector(); // PASSED
-    xdsa_test_sll();
+    // xdsa_test_sll(); // PASSED
     imd_debug_memory_init(NULL, NULL, NULL);
     imd_debug_memory_print(0);
     imd_debug_memory_reset();

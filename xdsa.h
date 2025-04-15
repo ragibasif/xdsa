@@ -23,34 +23,6 @@ extern "C" {
 #include <string.h> /*Includes the string manipulation library for functions like `memcpy`.*/
 #include <time.h> /*time*/
 
-// ## Common C Operation Antonyms
-//
-// - create <=> destroy - Often used for allocating/freeing resources
-// - initialize <=> deinitialize / finalize - usually cleanup of initialized
-// state
-// - add <=> remove - For lists, arrays, sets, etc.
-// - make <=> destroy - For objects, structs, modules
-// - start <=> stop - Threads, timers, services
-// - enable <=> disable - Features, flags, interrupts
-// - open <=> close - Files, sockets, devices
-// - lock <=> unlock - Mutexes, semaphores
-// - push <=> pop - Stack, queue
-// - set <=> unset / clear - Variables, bits, flags
-// - show <=> hide - UIs, debugging/log info
-// - increment <=> decrement - Counters, indexes
-// - attach <=> detach - Processes, threads, signals
-// - read <=> write - IO operations (note: not exactly opposites but
-// complementary)
-// - allocate <=> free - malloc() vs. free()
-// - begin <=> end - Ranges, loops, sections
-// - front <=> back - Often used with deques/lists
-// - input <=> output - Data direction
-// - connect <=> disconnect - Sockets, devices, resources
-// - mount <=> unmount - Filesystems
-// - assert <=> assume / ignore - Often assert() vs. silent handling
-// - expand <=> shrink / compress - Buffers, memory regions
-// - save <=> load - Persistent state
-
 // NOTE: All data structures should have the following methods; int size(return
 // the size), void clear(remove all elements), bool empty(check if empty), void
 // print(obvious)
@@ -75,13 +47,13 @@ extern "C" {
 /******************************************************************************/
 
 /******************************************************************************/
-/*                                            DYNAMIC ARRAY - RESIZABLE ARRAY */
+/*                                   VECTOR - DYNAMIC ARRAY - RESIZABLE ARRAY */
 /******************************************************************************/
 
 struct xdsa_vector {
-  int *array;
-  size_t size;
-  size_t capacity;
+    int *array;
+    size_t size;
+    size_t capacity;
 };
 
 extern struct xdsa_vector *xdsa_vector_create(size_t size);
@@ -103,28 +75,18 @@ extern void xdsa_vector_reserve(struct xdsa_vector *vector, size_t capacity);
 /******************************************************************************/
 
 struct xdsa_list_node {
-  int data;
-  struct xdsa_list_node *previous;
-  struct xdsa_list_node *next;
+    int data;
+    struct xdsa_list_node *previous;
+    struct xdsa_list_node *next;
 };
 
 extern struct xdsa_list_node *xdsa_list_node_create(int data);
 extern void xdsa_list_node_destroy(struct xdsa_list_node *node);
 
-// NOTE: All data structures should have the following methods: int size(), void
-// clear(), bool empty(), void print()
-// NOTE: linked list: adding and removing from the end of the
-// list should be constant time; accessing the front item should be constant
-// time; the common methods they should have are: push_back(add to the end),
-// pop_back(remove from the end), back (returns the last item), front (returns
-// the first item)
-// NOTE: doubly linked list: push_front ( add item to the
-// front), pop_front (remvoe from the front)
-
 struct xdsa_sll {
-  size_t size;
-  struct xdsa_list_node *head;
-  struct xdsa_list_node *tail;
+    size_t size;
+    struct xdsa_list_node *head;
+    struct xdsa_list_node *tail;
 };
 
 extern struct xdsa_sll *xdsa_sll_create(void);
@@ -136,7 +98,6 @@ extern void xdsa_sll_print(struct xdsa_list_node *head);
 extern void xdsa_sll_push_front(struct xdsa_sll *sll, int data);
 extern int xdsa_sll_pop_front(struct xdsa_sll *sll);
 extern void xdsa_sll_push_back(struct xdsa_sll *sll, int data);
-extern int xdsa_sll_pop_back(struct xdsa_sll *sll);
 extern int xdsa_sll_front(struct xdsa_sll *sll);
 extern int xdsa_sll_back(struct xdsa_sll *sll);
 
@@ -144,20 +105,10 @@ extern int xdsa_sll_back(struct xdsa_sll *sll);
 /*                                               DOUBLY LINKED LIST - TWO WAY */
 /******************************************************************************/
 
-// NOTE: All data structures should have the following methods: int size(), void
-// clear(), bool empty(), void print()
-// NOTE: linked list: adding and removing from the end of the
-// list should be constant time; accessing the front item should be constant
-// time; the common methods they should have are: push_back(add to the end),
-// pop_back(remove from the end), back (returns the last item), front (returns
-// the first item)
-// NOTE: doubly linked list: push_front ( add item to the
-// front), pop_front (remvoe from the front)
-
 struct xdsa_dll {
-  size_t size;
-  struct xdsa_list_node *head;
-  struct xdsa_list_node *tail;
+    size_t size;
+    struct xdsa_list_node *head;
+    struct xdsa_list_node *tail;
 };
 
 extern struct xdsa_dll *xdsa_dll_create(size_t size);
