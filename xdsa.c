@@ -2,10 +2,10 @@
 #include "xdsa.h"
 #include <assert.h>
 #include <stdio.h>
-#define IMD_MEMORY_DEBUG /* turns on the memory debugging system */
+#define IMD_MEMORY_DEBUG // turns on the memory debugging system
 #include "imd.h"
-
-// FIXME: Add errors to illegal method calls for vector and sll
+#define XDLOG_PRINT // replaces printf and fprintf with macros with debug info
+#include "xdlog.h"
 
 /******************************************************************************/
 /*                                                               STACK - LIFO */
@@ -130,7 +130,7 @@ void xdsa_vector_reserve(struct xdsa_vector *vector, size_t capacity) {
 }
 
 // TODO: move to separate test file and directory
-static void xdsa_test_vector(void) {
+void xdsa_test_vector(void) {
 
     // Test creation and basic properties
     struct xdsa_vector *v = xdsa_vector_create(5);
@@ -522,6 +522,112 @@ int xdsa_binary_search(const int *array, int length, int target) {
     return -1; // Target not found
 }
 
+void xdsa_test_binary_search(void) {
+    printf("=== Starting Binary Search Tests ===\n");
+
+    // Test Case 1: Empty array
+    printf("Test 1: Empty array...\n");
+    {
+        int *empty = NULL;
+        assert(xdsa_binary_search(empty, 0, 42) == -1);
+    }
+
+    // Test Case 2: Single element array (target present)
+    printf("Test 2: Single element array (target present)...\n");
+    {
+        int single[] = {5};
+        assert(xdsa_binary_search(single, 1, 5) == 0);
+    }
+
+    // Test Case 3: Single element array (target absent)
+    printf("Test 3: Single element array (target absent)...\n");
+    {
+        int single[] = {5};
+        assert(xdsa_binary_search(single, 1, 7) == -1);
+    }
+
+    // Test Case 4: Small even-sized array
+    printf("Test 4: Small even-sized array...\n");
+    {
+        int small_even[] = {2, 4, 6, 8};
+        assert(xdsa_binary_search(small_even, 4, 2) == 0);
+        assert(xdsa_binary_search(small_even, 4, 4) == 1);
+        assert(xdsa_binary_search(small_even, 4, 6) == 2);
+        assert(xdsa_binary_search(small_even, 4, 8) == 3);
+        assert(xdsa_binary_search(small_even, 4, 1) == -1);
+        assert(xdsa_binary_search(small_even, 4, 5) == -1);
+        assert(xdsa_binary_search(small_even, 4, 9) == -1);
+    }
+
+    // Test Case 5: Small odd-sized array
+    printf("Test 5: Small odd-sized array...\n");
+    {
+        int small_odd[] = {1, 3, 5, 7, 9};
+        assert(xdsa_binary_search(small_odd, 5, 1) == 0);
+        assert(xdsa_binary_search(small_odd, 5, 3) == 1);
+        assert(xdsa_binary_search(small_odd, 5, 5) == 2);
+        assert(xdsa_binary_search(small_odd, 5, 7) == 3);
+        assert(xdsa_binary_search(small_odd, 5, 9) == 4);
+        assert(xdsa_binary_search(small_odd, 5, 0) == -1);
+        assert(xdsa_binary_search(small_odd, 5, 2) == -1);
+        assert(xdsa_binary_search(small_odd, 5, 8) == -1);
+        assert(xdsa_binary_search(small_odd, 5, 10) == -1);
+    }
+
+    // Test Case 6: Large array
+    printf("Test 6: Large array...\n");
+    {
+        int large[1000];
+        for (int i = 0; i < 1000; i++) {
+            large[i] = i * 2; // Even numbers from 0 to 1998
+        }
+        assert(xdsa_binary_search(large, 1000, 0) == 0);
+        assert(xdsa_binary_search(large, 1000, 1998) == 999);
+        assert(xdsa_binary_search(large, 1000, 1000) == 500);
+        assert(xdsa_binary_search(large, 1000, 1234) == 617);
+        assert(xdsa_binary_search(large, 1000, -1) == -1);
+        assert(xdsa_binary_search(large, 1000, 1999) == -1);
+        assert(xdsa_binary_search(large, 1000, 2000) == -1);
+    }
+
+    // Test Case 7: Duplicate elements (should return any matching index)
+    printf("Test 7: Duplicate elements...\n");
+    {
+        int duplicates[] = {1, 2, 2, 2, 3, 4};
+        int result = xdsa_binary_search(duplicates, 6, 2);
+        assert(result >= 1 && result <= 3); // Could be any of the three 2's
+    }
+
+    // Test Case 8: All identical elements
+    printf("Test 8: All identical elements...\n");
+    {
+        int identical[] = {5, 5, 5, 5, 5};
+        int result = xdsa_binary_search(identical, 5, 5);
+        assert(result >= 0 && result <= 4); // Could be any index
+        assert(xdsa_binary_search(identical, 5, 4) == -1);
+    }
+
+    // Test Case 9: Target at beginning/end
+    printf("Test 9: Target at beginning/end...\n");
+    {
+        int medium[] = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
+        assert(xdsa_binary_search(medium, 10, 10) == 0);
+        assert(xdsa_binary_search(medium, 10, 100) == 9);
+    }
+
+    // Test Case 10: Negative numbers
+    printf("Test 10: Negative numbers...\n");
+    {
+        int negatives[] = {-50, -40, -30, -20, -10, 0, 10, 20, 30, 40, 50};
+        assert(xdsa_binary_search(negatives, 11, -50) == 0);
+        assert(xdsa_binary_search(negatives, 11, 50) == 10);
+        assert(xdsa_binary_search(negatives, 11, -25) == -1);
+        assert(xdsa_binary_search(negatives, 11, 25) == -1);
+    }
+
+    printf("=== All binary search tests passed successfully ===\n");
+}
+
 /******************************************************************************/
 /*                                                  GRAPH - ADJ LIST / MATRIX */
 /******************************************************************************/
@@ -563,7 +669,8 @@ int main(int argc, char **argv) {
     (void)argv;
 
     // xdsa_test_vector(); // PASSED
-    // xdsa_test_sll(); // PASSED
+    // xdsa_test_sll();    // PASSED
+    // xdsa_test_binary_search(); // PASSED
     imd_debug_memory_init(NULL, NULL, NULL);
     imd_debug_memory_print(0);
     imd_debug_memory_reset();

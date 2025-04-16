@@ -5,7 +5,7 @@ RESET=\033[0m
 
 
 CC := gcc
-CFLAGS := -std=c99 -Wall -Wextra -O0 -g -pedantic -DDEBUG
+CFLAGS := -std=c99 -Wall -Wextra -O0 -g3 -pedantic -DDEBUG
 
 LDFLAGS :=
 LIBS =

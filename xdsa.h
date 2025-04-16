@@ -1,15 +1,7 @@
+// xdsa.h
+
 #ifndef __XDSA_H__
 #define __XDSA_H__
-
-/*
-Module Name: xdsa.h
-
-Description:
-This is a C header file for xdsa.
-
-Author: Ragib Asif
-Date: 2025-04-08
-*/
 
 #ifdef __cplusplus
 extern "C" {
@@ -33,7 +25,6 @@ extern "C" {
 // (returns the first item)
 // NOTE: doubly linked list: push_front ( add item to
 // the front), pop_front (remvoe from the front)
-// TODO: SINGLY LINKED LIST
 // TODO: DOUBLY LINKED LIST
 // TODO: HASH TABLE
 // TODO: STACK
