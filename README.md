@@ -1,8 +1,8 @@
 # xdsa
 
-XDSA contains a collection of data structures and algorithms implemented in C.
+A collection of data structures and algorithms implemented in C for **_educational purposes only_**. It's written in standard C (C99) and uses GNU Make for building.
 
-It's written in standard C (C99) and uses GNU Make for building. The goal of this project is to implement data structures and algorithms from scratch for ***educational purposes only***.
+## Data Structures
 
 - [x] Dynamic Array
 - [x] Singly Linked List
@@ -10,23 +10,17 @@ It's written in standard C (C99) and uses GNU Make for building. The goal of thi
 - [ ] Stack
 - [ ] Queue
 - [ ] Heap
-- [ ] Binary Search
 - [ ] Binary Search Tree
 - [ ] AVL Tree
 
-## 📁 Directory Structure
+## Algorithms
 
-```bash
-xdsa/
-├── xdsa.c          # Source file
-├── xdsa.h          # Header file
-├── Makefile        # Build system
-└── README.md       # This file
-```
+- [x] Binary Search
+- [ ] Insertion Sort
 
-## 🛠️ Usage
+## Usage
 
-### 💻 Installation
+### Installation
 
 Clone the repository.
 
@@ -36,19 +30,19 @@ git clone git@github.com:ragibasif/xdsa.git
 
 Make sure you have `gcc` and `make` installed.
 
-### 🔧 Build the project
+### Build the project
 
 ```bash
 make
 ```
 
-### 🏃 Run the executable
+### Run the executable
 
 ```bash
 ./xdsa
 ```
 
-### 🧹 Clean build files
+### Clean build files
 
 ```bash
 make clean

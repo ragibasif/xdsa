@@ -4,8 +4,6 @@
 #include <stdio.h>
 #define IMD_MEMORY_DEBUG // turns on the memory debugging system
 #include "imd.h"
-#define XDLOG_PRINT // replaces printf and fprintf with macros with debug info
-#include "xdlog.h"
 
 /******************************************************************************/
 /*                                                               STACK - LIFO */
@@ -500,6 +498,22 @@ void xdsa_test_sll(void) {
 /*                                                         SORTING ALGORITHMS */
 /******************************************************************************/
 
+// TODO: add tests for insertion sort
+void xdsa_insertion_sort(int *array, size_t length) {
+    // start from the first index
+    size_t i;
+    size_t j;
+    for (i = 1; i < length; i++) {
+        int key = array[i];
+        j = i - 1;
+        while (j >= 0 && array[j] > key) {
+            array[j + 1] = array[j];
+            j--;
+        }
+        array[j + 1] = key;
+    }
+}
+
 /******************************************************************************/
 /*                                                       SEARCHING ALGORITHMS */
 /******************************************************************************/
@@ -667,6 +681,12 @@ void xdsa_test_binary_search(void) {
 int main(int argc, char **argv) {
     (void)argc;
     (void)argv;
+    int array[7] = {0, 1, 2, 3, 6, 4, 5};
+    xdsa_insertion_sort(array, 7);
+    size_t i;
+    for (i = 0; i < 7; i++) {
+        printf("%d\n", array[i]);
+    }
 
     // xdsa_test_vector(); // PASSED
     // xdsa_test_sll();    // PASSED

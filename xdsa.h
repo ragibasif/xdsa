@@ -147,6 +147,8 @@ extern int xdsa_dll_back(struct xdsa_vector *dll);
 /*                                                         SORTING ALGORITHMS */
 /******************************************************************************/
 
+extern void xdsa_insertion_sort(int *array, size_t length);
+
 /******************************************************************************/
 /*                                                       SEARCHING ALGORITHMS */
 /******************************************************************************/
