@@ -8,7 +8,7 @@ CC := gcc
 CFLAGS := -std=c99 -Wall -Wextra -O0 -g3 -pedantic -DDEBUG
 
 LDFLAGS := -lc
-LIBS =
+#LIBS =
 
 
 EXECUTABLE := xdsa

@@ -1,6 +1,9 @@
 # xdsa
 
-A collection of data structures and algorithms implemented in C for **_educational purposes only_**. It's written in standard C (C99) and uses GNU Make for building.
+> [!warning]
+> This library is incomplete and is intended to be for **_educational purposes only_**.
+
+A collection of data structures and algorithms implemented in C. It's written in standard C (C99) and uses GNU Make for building.
 
 ## Data Structures
 
@@ -17,6 +20,11 @@ A collection of data structures and algorithms implemented in C for **_education
 
 - [x] Binary Search
 - [ ] Insertion Sort
+- [ ] Merge Sort
+
+## Math
+
+- [x] Mod
 
 ## Usage
 
