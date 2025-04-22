@@ -34,13 +34,7 @@ struct xdsa_list_node {
     struct xdsa_list_node *next;
 };
 
-struct xdsa_sll {
-    size_t size;
-    struct xdsa_list_node *head;
-    struct xdsa_list_node *tail;
-};
-
-struct xdsa_dll {
+struct xdsa_linked_list {
     size_t size;
     struct xdsa_list_node *head;
     struct xdsa_list_node *tail;
@@ -328,8 +322,8 @@ void xdsa_list_node_destroy(struct xdsa_list_node *node) {
     node = NULL;
 }
 
-struct xdsa_sll *xdsa_sll_create(void) {
-    struct xdsa_sll *sll = malloc(sizeof(*sll));
+struct xdsa_linked_list *xdsa_sll_create(void) {
+    struct xdsa_linked_list *sll = malloc(sizeof(*sll));
     if (sll == NULL) {
         fprintf(stderr,
                 "Failed to allocate %zu bytes in file %s on line %u within "
@@ -343,7 +337,7 @@ struct xdsa_sll *xdsa_sll_create(void) {
     return sll;
 }
 
-void xdsa_sll_destroy(struct xdsa_sll *sll) {
+void xdsa_sll_destroy(struct xdsa_linked_list *sll) {
     while (sll->head != NULL) {
         struct xdsa_list_node *temp = sll->head->next;
         xdsa_list_node_destroy(sll->head);
@@ -354,9 +348,9 @@ void xdsa_sll_destroy(struct xdsa_sll *sll) {
     sll = NULL;
 }
 
-int xdsa_sll_size(struct xdsa_sll *sll) { return sll->size; }
+int xdsa_sll_size(struct xdsa_linked_list *sll) { return sll->size; }
 
-void xdsa_sll_clear(struct xdsa_sll *sll) {
+void xdsa_sll_clear(struct xdsa_linked_list *sll) {
     while (sll->head != NULL) {
         struct xdsa_list_node *temp = sll->head->next;
         sll->head->data = 0;
@@ -367,7 +361,7 @@ void xdsa_sll_clear(struct xdsa_sll *sll) {
     sll->head = sll->tail = NULL;
 }
 
-bool xdsa_sll_empty(struct xdsa_sll *sll) { return sll->size == 0; }
+bool xdsa_sll_empty(struct xdsa_linked_list *sll) { return sll->size == 0; }
 
 void xdsa_sll_print(struct xdsa_list_node *head) {
     while (head != NULL) {
@@ -376,7 +370,7 @@ void xdsa_sll_print(struct xdsa_list_node *head) {
     }
 }
 
-void xdsa_sll_push_front(struct xdsa_sll *sll, int data) {
+void xdsa_sll_push_front(struct xdsa_linked_list *sll, int data) {
     struct xdsa_list_node *new_head = xdsa_list_node_create(data);
     new_head->next = sll->head;
     sll->head = new_head;
@@ -386,7 +380,7 @@ void xdsa_sll_push_front(struct xdsa_sll *sll, int data) {
     sll->size++;
 }
 
-int xdsa_sll_pop_front(struct xdsa_sll *sll) {
+int xdsa_sll_pop_front(struct xdsa_linked_list *sll) {
     if (!sll->size)
         return -1;
     int data = sll->head->data;
@@ -397,19 +391,19 @@ int xdsa_sll_pop_front(struct xdsa_sll *sll) {
     return data;
 }
 
-void xdsa_sll_push_back(struct xdsa_sll *sll, int data) {
+void xdsa_sll_push_back(struct xdsa_linked_list *sll, int data) {
     sll->tail->next = xdsa_list_node_create(data);
     sll->tail = sll->tail->next;
     sll->size++;
 }
 
-int xdsa_sll_front(struct xdsa_sll *sll) {
+int xdsa_sll_front(struct xdsa_linked_list *sll) {
     if (!sll->size)
         return -1;
     return sll->head->data;
 }
 
-int xdsa_sll_back(struct xdsa_sll *sll) {
+int xdsa_sll_back(struct xdsa_linked_list *sll) {
     if (!sll->size)
         return -1;
     return sll->tail->data;
@@ -427,7 +421,7 @@ void xdsa_test_sll(void) {
     xdsa_list_node_destroy(node);
 
     // List creation and basic properties
-    struct xdsa_sll *list = xdsa_sll_create();
+    struct xdsa_linked_list *list = xdsa_sll_create();
     assert(list != NULL);
     assert(xdsa_sll_size(list) == 0);
     assert(list->head == NULL);
@@ -679,6 +673,22 @@ void xdsa_test_binary_search(void) {
 /*                                                           BIT MANIPULATION */
 /******************************************************************************/
 
+// uses 2's complement for signed
+// Two's complement - flip all bits and add one
+// (5) 00000101 -> 11111010 + 1 -> 11111011 (-5)
+// (-5) 11111011 -> 00000100 + 1 -> 00000101 (5)
+void xdsa_integer_to_binary(signed long long int number, size_t size) {
+    char *binary_string = malloc((size + 1) * sizeof(*binary_string));
+    size_t i;
+    for (i = size + 1; i > 0; i--) {
+        binary_string[i - 1] = (number & 1) ? '1' : '0';
+        number >>= 1;
+    }
+    binary_string[size] = '\0';
+    printf("%s\n", binary_string);
+    free(binary_string);
+}
+
 /******************************************************************************/
 /*                                                       MATH & NUMBER THEORY */
 /******************************************************************************/
@@ -741,6 +751,7 @@ int main(int argc, char **argv) {
     // xdsa_test_sll();           // PASSED
     // xdsa_test_binary_search(); // PASSED
     // xdsa_test_mod();           // PASSED
+
     imd_debug_memory_init(NULL, NULL, NULL);
     imd_debug_memory_print(0);
     imd_debug_memory_reset();

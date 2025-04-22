@@ -45,24 +45,24 @@ extern void xdsa_vector_reserve(struct xdsa_vector *vector, size_t capacity);
 extern struct xdsa_list_node *xdsa_list_node_create(int data);
 extern void xdsa_list_node_destroy(struct xdsa_list_node *node);
 
-extern struct xdsa_sll *xdsa_sll_create(void);
-extern void xdsa_sll_destroy(struct xdsa_sll *sll);
-extern int xdsa_sll_size(struct xdsa_sll *sll);
-extern void xdsa_sll_clear(struct xdsa_sll *sll);
-extern bool xdsa_sll_empty(struct xdsa_sll *sll);
+extern struct xdsa_linked_list *xdsa_sll_create(void);
+extern void xdsa_sll_destroy(struct xdsa_linked_list *sll);
+extern int xdsa_sll_size(struct xdsa_linked_list *sll);
+extern void xdsa_sll_clear(struct xdsa_linked_list *sll);
+extern bool xdsa_sll_empty(struct xdsa_linked_list *sll);
 extern void xdsa_sll_print(struct xdsa_list_node *head);
-extern void xdsa_sll_push_front(struct xdsa_sll *sll, int data);
-extern int xdsa_sll_pop_front(struct xdsa_sll *sll);
-extern void xdsa_sll_push_back(struct xdsa_sll *sll, int data);
-extern int xdsa_sll_front(struct xdsa_sll *sll);
-extern int xdsa_sll_back(struct xdsa_sll *sll);
+extern void xdsa_sll_push_front(struct xdsa_linked_list *sll, int data);
+extern int xdsa_sll_pop_front(struct xdsa_linked_list *sll);
+extern void xdsa_sll_push_back(struct xdsa_linked_list *sll, int data);
+extern int xdsa_sll_front(struct xdsa_linked_list *sll);
+extern int xdsa_sll_back(struct xdsa_linked_list *sll);
 
 /******************************************************************************/
 /*                                               DOUBLY LINKED LIST - TWO WAY */
 /******************************************************************************/
 
-extern struct xdsa_dll *xdsa_dll_create(size_t size);
-extern void xdsa_dll_destroy(struct xdsa_dll *dll);
+extern struct xdsa_linked_list *xdsa_dll_create(size_t size);
+extern void xdsa_dll_destroy(struct xdsa_linked_list *dll);
 extern int xdsa_dll_size(struct xdsa_vector *dll);
 extern void xdsa_dll_clear(struct xdsa_vector *dll);
 extern bool xdsa_dll_empty(struct xdsa_vector *dll);
@@ -147,6 +147,8 @@ extern int xdsa_binary_search(const int *array, int length, int target);
 /******************************************************************************/
 /*                                                           BIT MANIPULATION */
 /******************************************************************************/
+
+extern void xdsa_integer_to_binary(signed long long int number, size_t size);
 
 /******************************************************************************/
 /*                                                       MATH & NUMBER THEORY */
