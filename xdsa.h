@@ -109,6 +109,8 @@ extern int xdsa_dll_back(struct xdsa_vector *dll);
 extern void xdsa_insertion_sort(int *array, size_t length);
 // TODO: implement
 extern void xdsa_merge_sort(int *array, size_t length);
+// TODO: implement
+extern void xdsa_bubble_sort(int *array, size_t length);
 
 /******************************************************************************/
 /*                                                       SEARCHING ALGORITHMS */
