@@ -693,16 +693,29 @@ void xdsa_integer_to_binary(signed long long int number, size_t size) {
 /*                                                       MATH & NUMBER THEORY */
 /******************************************************************************/
 
-// to be able to properly mod negatives
-int xdsa_mod(int a, int b) {
+// https://stackoverflow.com/questions/11720656/modulo-operation-with-negative-numbers
+//  to be able to properly mod negatives
+//  the `%` is not the euclidean modulo operator, it the remainder operator
+//  C99 defines `%` for `a % b` as: `a == (a /b * b) + a % b`
+int xdsa_mod(long long int a, long long int b) {
     // WARNING: modulo by 0 is undefined behavior
-    // FIX: can use assertion such as: 'assert(b!=0);' or 'exit(EXIT_FAILURE);'
-    // or 'fprintf(stderr,"Modulo by 0 is undefined behavior!\n");'
-    // NOTE: here, I just return 0, which is not recommended for any real
+    // OPTIMIZE: Options to handle mod by 0:
+    // assert(b != 0);
+    // exit(EXIT_FAILURE);
+    // fprintf(stderr,"Modulo by 0 is undefined behavior!\n");
+
+    // HACK: here, I just return 0, which is not recommended for any real
     // applications
     if (b == 0)
         return 0;
     return (a % b + b) % b;
+
+    // if you only want to return positives, use the following
+    // long long int remainder = a % b;
+    // return remainder < 0 ? remainder + b : remainder;
+    // `a%b` is always in the range [-b+1, b-1]. So if it is negative, adding b
+    // to it will put it in the positive range without changing its value modulo
+    // b.
 }
 
 void xdsa_test_mod(void) {
@@ -747,10 +760,10 @@ int main(int argc, char **argv) {
     (void)argc;
     (void)argv;
 
-    // xdsa_test_vector();        // PASSED
-    // xdsa_test_sll();           // PASSED
-    // xdsa_test_binary_search(); // PASSED
-    // xdsa_test_mod();           // PASSED
+    // xdsa_test_vector();        // PASSED:
+    // xdsa_test_sll();           // PASSED:
+    // xdsa_test_binary_search(); // PASSED:
+    xdsa_test_mod(); // PASSED:
 
     imd_debug_memory_init(NULL, NULL, NULL);
     imd_debug_memory_print(0);

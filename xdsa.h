@@ -156,7 +156,7 @@ extern void xdsa_integer_to_binary(signed long long int number, size_t size);
 /*                                                       MATH & NUMBER THEORY */
 /******************************************************************************/
 
-extern int xdsa_mod(int a, int b);
+extern int xdsa_mod(long long int a, long long int b);
 
 #ifdef __cplusplus
 }
