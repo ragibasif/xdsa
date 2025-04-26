@@ -30,14 +30,14 @@
 /******************************************************************************/
 
 unsigned long long int xdsa_buffer_ulli[MAX_BUFFER_SIZE] = {0};
-unsigned long int xdsa_buffer_uli[MAX_BUFFER_SIZE] = {0};
-unsigned int xdsa_buffer_ui[MAX_BUFFER_SIZE] = {0};
-unsigned short int xdsa_buffer_usi[MAX_BUFFER_SIZE] = {0};
+// unsigned long int xdsa_buffer_uli[MAX_BUFFER_SIZE] = {0};
+// unsigned int xdsa_buffer_ui[MAX_BUFFER_SIZE] = {0};
+// unsigned short int xdsa_buffer_usi[MAX_BUFFER_SIZE] = {0};
 
-signed long long int xdsa_buffer_slli[MAX_BUFFER_SIZE] = {0};
-signed long int xdsa_buffer_sli[MAX_BUFFER_SIZE] = {0};
-signed int xdsa_buffer_si[MAX_BUFFER_SIZE] = {0};
-signed short int xdsa_buffer_ssi[MAX_BUFFER_SIZE] = {0};
+// signed long long int xdsa_buffer_slli[MAX_BUFFER_SIZE] = {0};
+// signed long int xdsa_buffer_sli[MAX_BUFFER_SIZE] = {0};
+// signed int xdsa_buffer_si[MAX_BUFFER_SIZE] = {0};
+// signed short int xdsa_buffer_ssi[MAX_BUFFER_SIZE] = {0};
 
 /******************************************************************************/
 /*                                                                    STRUCTS */
@@ -696,10 +696,6 @@ unsigned long long int xdsa_top_down_fibonacci(unsigned long long int number) {
 }
 
 unsigned long long int xdsa_bottom_up_fibonacci(unsigned long long int number) {
-    // NOTE: To optimize this further, one can just keep track of only the
-    // previous two values. This will essential make space complexity be O(1)
-    // however it will not allow for O(1) access all previous fibonacci values
-    // and they will have to be recalculated every time.
     xdsa_buffer_ulli[0] = 1;
     xdsa_buffer_ulli[1] = 1;
     unsigned long long i;
@@ -707,6 +703,26 @@ unsigned long long int xdsa_bottom_up_fibonacci(unsigned long long int number) {
         xdsa_buffer_ulli[i] = xdsa_buffer_ulli[i - 1] + xdsa_buffer_ulli[i - 2];
     }
     return xdsa_buffer_ulli[number];
+}
+
+unsigned long long int
+xdsa_optimized_bottom_up_fibonacci(unsigned long long int number) {
+    unsigned long long int first;
+    unsigned long long int second;
+    unsigned long long int third;
+    first = 1;
+    second = 1;
+    third = 0;
+    if (number <= 1)
+        return first;
+    unsigned long long i;
+    for (i = 2; i < number + 1; i++) {
+        third = first + second;
+        first = second;
+        second = third;
+    }
+
+    return third;
 }
 
 void xdsa_test_fibonacci(void) {
@@ -719,6 +735,9 @@ void xdsa_test_fibonacci(void) {
 
     assert(xdsa_bottom_up_fibonacci(0) == 1);
     assert(xdsa_bottom_up_fibonacci(1) == 1);
+
+    assert(xdsa_optimized_bottom_up_fibonacci(0) == 1);
+    assert(xdsa_optimized_bottom_up_fibonacci(1) == 1);
 
     XDSA_RESET_BUFFER(xdsa_buffer_ulli);
 
@@ -736,6 +755,12 @@ void xdsa_test_fibonacci(void) {
     assert(xdsa_bottom_up_fibonacci(5) == 8);
     assert(xdsa_bottom_up_fibonacci(6) == 13);
 
+    assert(xdsa_optimized_bottom_up_fibonacci(2) == 2);
+    assert(xdsa_optimized_bottom_up_fibonacci(3) == 3);
+    assert(xdsa_optimized_bottom_up_fibonacci(4) == 5);
+    assert(xdsa_optimized_bottom_up_fibonacci(5) == 8);
+    assert(xdsa_optimized_bottom_up_fibonacci(6) == 13);
+
     XDSA_RESET_BUFFER(xdsa_buffer_ulli);
 
     assert(xdsa_top_down_fibonacci(10) == 89);
@@ -748,6 +773,10 @@ void xdsa_test_fibonacci(void) {
     assert(xdsa_bottom_up_fibonacci(15) == 987);
     assert(xdsa_bottom_up_fibonacci(20) == 10946);
 
+    assert(xdsa_optimized_bottom_up_fibonacci(10) == 89);
+    assert(xdsa_optimized_bottom_up_fibonacci(15) == 987);
+    assert(xdsa_optimized_bottom_up_fibonacci(20) == 10946);
+
     XDSA_RESET_BUFFER(xdsa_buffer_ulli);
 
     assert(xdsa_top_down_fibonacci(50) == 20365011074ULL);
@@ -757,6 +786,9 @@ void xdsa_test_fibonacci(void) {
 
     assert(xdsa_bottom_up_fibonacci(50) == 20365011074ULL);
     assert(xdsa_bottom_up_fibonacci(60) == 2504730781961ULL);
+
+    assert(xdsa_optimized_bottom_up_fibonacci(50) == 20365011074ULL);
+    assert(xdsa_optimized_bottom_up_fibonacci(60) == 2504730781961ULL);
 
     XDSA_RESET_BUFFER(xdsa_buffer_ulli);
 
@@ -776,7 +808,13 @@ void xdsa_test_fibonacci(void) {
     XDSA_RESET_BUFFER(xdsa_buffer_ulli);
     unsigned long long bottom_up = xdsa_bottom_up_fibonacci(30);
 
+    unsigned long long optimized_bottom_up =
+        xdsa_optimized_bottom_up_fibonacci(30);
+
+    XDSA_RESET_BUFFER(xdsa_buffer_ulli);
     assert(top_down == bottom_up);
+    assert(top_down == optimized_bottom_up);
+    assert(bottom_up == optimized_bottom_up);
 
     // NOTE: These tests assume the Fibonacci sequence is defined with:
     // F(0) = 1
@@ -887,7 +925,7 @@ int main(int argc, char **argv) {
     // xdsa_test_sll();           // PASSED:
     // xdsa_test_binary_search(); // PASSED:
     // xdsa_test_mod(); // PASSED:
-    // xdsa_test_fibonacci(); // PASSED:
+    xdsa_test_fibonacci(); // PASSED:
     XDSA_RESET_BUFFER(xdsa_buffer_ulli);
 
     imd_debug_memory_init(NULL, NULL, NULL);
