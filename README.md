@@ -5,27 +5,6 @@
 
 A collection of data structures and algorithms implemented in C. It's written in standard C (C99) and uses GNU Make for building.
 
-## Data Structures
-
-- [x] Dynamic Array
-- [x] Singly Linked List
-- [ ] Doubly Linked List
-- [ ] Stack
-- [ ] Queue
-- [ ] Heap
-- [ ] Binary Search Tree
-- [ ] AVL Tree
-
-## Algorithms
-
-- [x] Binary Search
-- [ ] Insertion Sort
-- [ ] Merge Sort
-
-## Math
-
-- [x] Mod
-
 ## Usage
 
 ### Installation

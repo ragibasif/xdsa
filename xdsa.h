@@ -9,6 +9,7 @@ extern "C" {
 
 #include <assert.h> //assert
 #include <ctype.h>  //size_t
+#include <limits.h>
 #include <stdarg.h>
 #include <stdbool.h> //true, false, bool
 #include <stdio.h> //Includes the standard I/O library for functions like `printf`.
@@ -61,6 +62,7 @@ extern int xdsa_sll_back(struct xdsa_linked_list *sll);
 /*                                               DOUBLY LINKED LIST - TWO WAY */
 /******************************************************************************/
 
+// TODO: implement
 extern struct xdsa_linked_list *xdsa_dll_create(size_t size);
 extern void xdsa_dll_destroy(struct xdsa_linked_list *dll);
 extern int xdsa_dll_size(struct xdsa_vector *dll);
@@ -137,6 +139,11 @@ extern int xdsa_binary_search(const int *array, int length, int target);
 /******************************************************************************/
 /*                                                   DYNAMIC PROGRAMMING (DP) */
 /******************************************************************************/
+
+extern unsigned long long int
+xdsa_top_down_fibonacci(unsigned long long int number);
+extern unsigned long long int
+xdsa_bottom_up_fibonacci(unsigned long long int number);
 
 /******************************************************************************/
 /*                                                          GREEDY ALGORITHMS */
