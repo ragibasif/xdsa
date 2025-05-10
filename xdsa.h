@@ -17,14 +17,6 @@ extern "C" {
 #include <string.h> //Includes the string manipulation library for functions like `memcpy`.
 #include <time.h> //time
 
-/******************************************************************************/
-/*                                                               STACK - LIFO */
-/******************************************************************************/
-
-/******************************************************************************/
-/*                                   VECTOR - DYNAMIC ARRAY - RESIZABLE ARRAY */
-/******************************************************************************/
-
 extern struct xdsa_vector *xdsa_vector_create(size_t size);
 extern void xdsa_vector_destroy(struct xdsa_vector *vector);
 extern int xdsa_vector_size(struct xdsa_vector *vector);
@@ -39,9 +31,6 @@ extern int xdsa_vector_at(struct xdsa_vector *vector, int index);
 extern size_t xdsa_vector_capacity(struct xdsa_vector *vector);
 extern void xdsa_vector_reserve(struct xdsa_vector *vector, size_t capacity);
 
-/******************************************************************************/
-/*                                               SINGLY LINKED LIST - ONE WAY */
-/******************************************************************************/
 
 extern struct xdsa_list_node *xdsa_list_node_create(int data);
 extern void xdsa_list_node_destroy(struct xdsa_list_node *node);
@@ -58,110 +47,20 @@ extern void xdsa_sll_push_back(struct xdsa_linked_list *sll, int data);
 extern int xdsa_sll_front(struct xdsa_linked_list *sll);
 extern int xdsa_sll_back(struct xdsa_linked_list *sll);
 
-/******************************************************************************/
-/*                                               DOUBLY LINKED LIST - TWO WAY */
-/******************************************************************************/
 
-// TODO: implement
-extern struct xdsa_linked_list *xdsa_dll_create(size_t size);
-extern void xdsa_dll_destroy(struct xdsa_linked_list *dll);
-extern int xdsa_dll_size(struct xdsa_vector *dll);
-extern void xdsa_dll_clear(struct xdsa_vector *dll);
-extern bool xdsa_dll_empty(struct xdsa_vector *dll);
-extern void xdsa_dll_print(struct xdsa_vector *dll);
-extern void xdsa_dll_push_front(struct xdsa_vector *dll, int data);
-extern int xdsa_dll_pop_front(struct xdsa_vector *dll);
-extern void xdsa_dll_push_back(struct xdsa_vector *dll, int data);
-extern int xdsa_dll_pop_back(struct xdsa_vector *dll);
-extern int xdsa_dll_front(struct xdsa_vector *dll);
-extern int xdsa_dll_back(struct xdsa_vector *dll);
-
-/******************************************************************************/
-/*                                              QUEUE - FIFO / CIRCULAR QUEUE */
-/******************************************************************************/
-
-/******************************************************************************/
-/*                                                       DEQUE - DOUBLE ENDED */
-/******************************************************************************/
-
-/******************************************************************************/
-/*                                                              HEAP - BINARY */
-/******************************************************************************/
-
-/******************************************************************************/
-/*                                                PRIORITY QUEUE - HEAP BASED */
-/******************************************************************************/
-
-/******************************************************************************/
-/*                                                   BINARY SEARCH TREE - BST */
-/******************************************************************************/
-
-/******************************************************************************/
-/*                                                  AVL TREE - SELF BALANCING */
-/******************************************************************************/
-
-/******************************************************************************/
-/*                                                 HASHING - HASH TABLE / MAP */
-/******************************************************************************/
-
-/******************************************************************************/
-/*                                                         SORTING ALGORITHMS */
-/******************************************************************************/
 
 extern void xdsa_insertion_sort(int *array, size_t length);
-// TODO: implement
-extern void xdsa_merge_sort(int *array, size_t length);
-// TODO: implement
-extern void xdsa_bubble_sort(int *array, size_t length);
-
-/******************************************************************************/
-/*                                                       SEARCHING ALGORITHMS */
-/******************************************************************************/
 
 extern int xdsa_binary_search(const int *array, int length, int target);
 
-/******************************************************************************/
-/*                                                  GRAPH - ADJ LIST / MATRIX */
-/******************************************************************************/
-
-/******************************************************************************/
-/*                                                         TRIE - PREFIX TREE */
-/******************************************************************************/
-
-/******************************************************************************/
-/*                                            UNION FIND - DISJOINT SET UNION */
-/******************************************************************************/
-
-/******************************************************************************/
-/*                                                   RECURSION & BACKTRACKING */
-/******************************************************************************/
-
-/******************************************************************************/
-/*                                                   DYNAMIC PROGRAMMING (DP) */
-/******************************************************************************/
 
 extern unsigned long long int
 xdsa_top_down_fibonacci(unsigned long long int number);
 extern unsigned long long int
 xdsa_bottom_up_fibonacci(unsigned long long int number);
 
-/******************************************************************************/
-/*                                                          GREEDY ALGORITHMS */
-/******************************************************************************/
-
-/******************************************************************************/
-/*                                                         DIVIDE AND CONQUER */
-/******************************************************************************/
-
-/******************************************************************************/
-/*                                                           BIT MANIPULATION */
-/******************************************************************************/
 
 extern void xdsa_integer_to_binary(signed long long int number, size_t size);
-
-/******************************************************************************/
-/*                                                       MATH & NUMBER THEORY */
-/******************************************************************************/
 
 extern int xdsa_mod(long long int a, long long int b);
 
