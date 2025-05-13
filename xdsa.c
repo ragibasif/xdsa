@@ -1,6 +1,8 @@
 // xdsa.c
 #include "xdsa.h"
 
+// TODO: Split into separate implementation files based on function/data
+// structure/algorithm with self contained tests
 
 #define MAX_BUFFER_SIZE 2048
 
@@ -11,7 +13,6 @@
             buffer[i] = 0;                                                     \
         }                                                                      \
     } while (0)
-*/
 
 unsigned long long int xdsa_buffer_ulli[MAX_BUFFER_SIZE] = {0};
 
@@ -32,8 +33,6 @@ struct xdsa_linked_list {
     struct xdsa_list_node *head;
     struct xdsa_list_node *tail;
 };
-
-
 
 struct xdsa_vector *xdsa_vector_create(size_t size) {
     struct xdsa_vector *vector = malloc(sizeof(*vector));
@@ -282,8 +281,6 @@ void xdsa_test_vector(void) {
     printf("=== All Vector Tests Passed ===\n");
 }
 
-
-
 struct xdsa_list_node *xdsa_list_node_create(int data) {
     struct xdsa_list_node *node = malloc(sizeof(*node));
     if (node == NULL) {
@@ -476,8 +473,6 @@ void xdsa_test_sll(void) {
     printf("=== All SLL tests passed successfully ===\n");
 }
 
-
-
 // TODO: add tests for insertion sort
 void xdsa_insertion_sort(int *array, size_t length) {
     // start from the first index
@@ -493,7 +488,6 @@ void xdsa_insertion_sort(int *array, size_t length) {
         array[j + 1] = key;
     }
 }
-
 
 int xdsa_binary_search(const int *array, int length, int target) {
     int left = 0, right = length - 1;
@@ -725,8 +719,6 @@ void xdsa_test_fibonacci(void) {
     // F(n) = F(n-1) + F(n-2) for n > 1
 }
 
-
-
 // uses 2's complement for signed
 // Two's complement - flip all bits and add one
 // (5) 00000101 -> 11111010 + 1 -> 11111011 (-5)
@@ -742,8 +734,6 @@ void xdsa_integer_to_binary(signed long long int number, size_t size) {
     printf("%s\n", binary_string);
     free(binary_string);
 }
-
-
 
 // https://stackoverflow.com/questions/11720656/modulo-operation-with-negative-numbers
 //  to be able to properly mod negatives
